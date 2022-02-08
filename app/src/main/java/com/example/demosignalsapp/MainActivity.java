@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,7 +13,10 @@ import com.example.demosignalsapp.adapter.SignalsAdapter;
 import com.example.demosignalsapp.databinding.ActivityMainBinding;
 import com.example.demosignalsapp.model.DataModel;
 import com.example.demosignalsapp.model.ResponseModel;
+import com.example.demosignalsapp.model.signal.Datum;
+import com.example.demosignalsapp.model.signal.DemoResponse;
 import com.example.demosignalsapp.viewmodel.MainActivityViewModel;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding mainBinding;
     SignalsAdapter signalsAdapter;
-    List<DataModel> dataModelList;
+    List<Datum> dataModelList;
     MainActivityViewModel viewModel;
 
     @Override
@@ -36,11 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-        viewModel.getMainActivityObserver().observe(this, new Observer<ResponseModel>() {
+        viewModel.getMainActivityObserver().observe(this, new Observer<DemoResponse>() {
             @Override
-            public void onChanged(ResponseModel responseModel) {
+            public void onChanged(DemoResponse responseModel) {
+                Log.d("res_db", "onChanged: model: " + new Gson().toJson(responseModel));
                 if (responseModel != null){
-                    dataModelList = responseModel.getSignals().getDataModel();
+                    dataModelList = responseModel.getSignals().getData();
                     signalsAdapter.setDataModelList(dataModelList);
                 }
                 else {

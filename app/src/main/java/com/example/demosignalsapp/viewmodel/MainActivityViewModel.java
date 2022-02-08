@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.demosignalsapp.model.DataModel;
 import com.example.demosignalsapp.model.ResponseModel;
+import com.example.demosignalsapp.model.signal.DemoResponse;
 import com.example.demosignalsapp.network.ApiInterface;
 import com.example.demosignalsapp.network.RetrofitClient;
 
@@ -19,28 +20,28 @@ import retrofit2.Response;
 
 public class MainActivityViewModel extends ViewModel {
 
-    private MutableLiveData<ResponseModel> responseModelMutableLiveData;
+    private MutableLiveData<DemoResponse> responseModelMutableLiveData;
 
     public MainActivityViewModel(){
         responseModelMutableLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ResponseModel> getMainActivityObserver(){
+    public MutableLiveData<DemoResponse> getMainActivityObserver(){
         return responseModelMutableLiveData;
     }
 
     public void makeApiCall(){
 
         ApiInterface apiInterface = RetrofitClient.getRetrofit().create(ApiInterface.class);
-        Call<ResponseModel> call = apiInterface.getSignals("2372752636289369", "", 1);
-        call.enqueue(new Callback<ResponseModel>() {
+        Call<DemoResponse> call = apiInterface.getSignals("2372752636289369", "", 1);
+        call.enqueue(new Callback<DemoResponse>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            public void onResponse(Call<DemoResponse> call, Response<DemoResponse> response) {
                 responseModelMutableLiveData.postValue(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(Call<DemoResponse> call, Throwable t) {
                 responseModelMutableLiveData.postValue(null);
             }
         });

@@ -2,6 +2,7 @@ package com.example.demosignalsapp.network;
 
 import com.example.demosignalsapp.model.DataModel;
 import com.example.demosignalsapp.model.ResponseModel;
+import com.example.demosignalsapp.model.signal.DemoResponse;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/get-signals")
 
-    Call<ResponseModel> getSignals(
+    Call<DemoResponse> getSignals(
 
             @Field("app_id") String app_id,
             @Field("old_new") String old_new,

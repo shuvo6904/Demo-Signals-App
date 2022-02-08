@@ -10,20 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demosignalsapp.databinding.SingleRowDataBinding;
 import com.example.demosignalsapp.model.DataModel;
+import com.example.demosignalsapp.model.signal.Datum;
 
 import java.util.List;
 
 public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalsViewHolder> {
 
     Context context;
-    List<DataModel> dataModelList;
+    List<Datum> dataModelList;
 
-    public SignalsAdapter(Context context, List<DataModel> dataModelList) {
+    public SignalsAdapter(Context context, List<Datum> dataModelList) {
         this.context = context;
         this.dataModelList = dataModelList;
     }
 
-    public void setDataModelList(List<DataModel> dataModelList){
+    public void setDataModelList(List<Datum> dataModelList){
         this.dataModelList = dataModelList;
         notifyDataSetChanged();
     }
@@ -65,7 +66,7 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalsV
 
         }
 
-        public void setDataList(DataModel dataModel) {
+        public void setDataList(Datum dataModel) {
             singleRowDataBinding.statusId.setText(dataModel.getStatus());
             singleRowDataBinding.currencyId.setText(dataModel.getCurrency());
         }
