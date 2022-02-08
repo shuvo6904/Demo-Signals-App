@@ -1,10 +1,6 @@
 package com.example.demosignalsapp.network;
 
-import com.example.demosignalsapp.model.DataModel;
-import com.example.demosignalsapp.model.ResponseModel;
 import com.example.demosignalsapp.model.signal.DemoResponse;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

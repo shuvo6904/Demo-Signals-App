@@ -1,18 +1,11 @@
 package com.example.demosignalsapp.viewmodel;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.demosignalsapp.model.DataModel;
-import com.example.demosignalsapp.model.ResponseModel;
 import com.example.demosignalsapp.model.signal.DemoResponse;
 import com.example.demosignalsapp.network.ApiInterface;
 import com.example.demosignalsapp.network.RetrofitClient;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

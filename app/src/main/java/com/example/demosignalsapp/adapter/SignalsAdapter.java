@@ -2,14 +2,12 @@ package com.example.demosignalsapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demosignalsapp.databinding.SingleRowDataBinding;
-import com.example.demosignalsapp.model.DataModel;
 import com.example.demosignalsapp.model.signal.Datum;
 
 import java.util.List;

@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import com.example.demosignalsapp.adapter.SignalsAdapter;
 import com.example.demosignalsapp.databinding.ActivityMainBinding;
-import com.example.demosignalsapp.model.DataModel;
-import com.example.demosignalsapp.model.ResponseModel;
 import com.example.demosignalsapp.model.signal.Datum;
 import com.example.demosignalsapp.model.signal.DemoResponse;
 import com.example.demosignalsapp.viewmodel.MainActivityViewModel;
