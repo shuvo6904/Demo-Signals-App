@@ -3,6 +3,7 @@ package com.example.demosignalsapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,29 +33,30 @@ public class MainActivity extends AppCompatActivity {
         View view = mainBinding.getRoot();
         setContentView(view);
 
-        signalsAdapter = new SignalsAdapter(this, dataModelList);
+
+        signalsAdapter = new SignalsAdapter(this);
+        mainBinding.recyclerId.setLayoutManager(new LinearLayoutManager(this));
         mainBinding.recyclerId.setAdapter(signalsAdapter);
 
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModel.makeApiCall();
 
-        viewModel.getMainActivityObserver().observe(this, new Observer<DemoResponse>() {
-            @Override
-            public void onChanged(DemoResponse responseModel) {
-                Log.d("res_db", "onChanged: model: " + new Gson().toJson(responseModel));
-                if (responseModel != null){
-                    dataModelList = responseModel.getSignals().getData();
-                    signalsAdapter.setDataModelList(dataModelList);
+        viewModel.getMainActivityObserver().observe(this, responseModel -> {
+            Log.d("res_db", "onChanged: model: " + new Gson().toJson(responseModel));
+            if (responseModel != null){
+                dataModelList = responseModel.getSignals().getData();
+                Log.e("SIZE", "onCreate: "+dataModelList.size());
+                if (!dataModelList.isEmpty())
                     signalsAdapter.updateDatum(dataModelList);
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "No Result Found", Toast.LENGTH_SHORT).show();
-                }
+            }
+            else {
+                Toast.makeText(MainActivity.this, "No Result Found", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        viewModel.makeApiCall();
+
 
     }
 }
