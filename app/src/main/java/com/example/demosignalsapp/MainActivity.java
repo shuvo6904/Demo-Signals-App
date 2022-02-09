@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 if (responseModel != null){
                     dataModelList = responseModel.getSignals().getData();
                     signalsAdapter.setDataModelList(dataModelList);
+                    signalsAdapter.updateDatum(dataModelList);
                 }
                 else {
                     Toast.makeText(MainActivity.this, "No Result Found", Toast.LENGTH_SHORT).show();

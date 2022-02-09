@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum implements Serializable
+public class Datum implements Serializable, Comparable
 {
 
     @SerializedName("id")
@@ -230,4 +230,34 @@ public class Datum implements Serializable
         this.appInfo = appInfo;
     }
 
+    @Override
+    public int compareTo(Object o) {
+
+        Datum datum = (Datum) o;
+
+        if (datum.getStatus().equals(this.status) && datum.getCurrency().equals(this.currency))
+        return 0;
+
+        return 1;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
