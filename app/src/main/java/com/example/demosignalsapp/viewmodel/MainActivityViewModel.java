@@ -1,11 +1,15 @@
 package com.example.demosignalsapp.viewmodel;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.demosignalsapp.model.signal.DemoResponse;
 import com.example.demosignalsapp.network.ApiInterface;
 import com.example.demosignalsapp.network.RetrofitClient;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +23,7 @@ public class MainActivityViewModel extends ViewModel {
         responseModelMutableLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<DemoResponse> getMainActivityObserver(){
+    public LiveData<DemoResponse> getResponseModelData(){
         return responseModelMutableLiveData;
     }
 

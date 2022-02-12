@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.demosignalsapp.apputil.MyDiffUtilCallbacks;
 import com.example.demosignalsapp.apputil.NewDiffCallback;
 import com.example.demosignalsapp.databinding.SingleRowDataBinding;
 import com.example.demosignalsapp.model.signal.Datum;
@@ -21,10 +20,14 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalsV
     Context context;
     List<Datum> dataModelList;
 
-    public SignalsAdapter(Context context) {
+   /* public SignalsAdapter(Context context) {
         this.context = context;
-    }
+    }*/
 
+    public SignalsAdapter(Context context, List<Datum> dataModelList) {
+        this.context = context;
+        this.dataModelList = dataModelList;
+    }
 
     @NonNull
     @Override
@@ -42,14 +45,36 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalsV
 
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull SignalsViewHolder holder, int position, @NonNull List<Object> payloads) {
+
+        if (payloads.isEmpty()){
+            super.onBindViewHolder(holder, position, payloads);
+        }
+        else {
+
+            Bundle bundle = (Bundle) payloads.get(0);
+
+            for (String key : bundle.keySet()){
+
+                if (key.equals("status")){
+                    holder.singleRowDataBinding.statusId.setText(bundle.getString("status"));
+                }
+                if (key.equals("currency")){
+                    holder.singleRowDataBinding.currencyId.setText(bundle.getString("currency"));
+                }
+
+            }
+
+        }
+
+
+    }
 
     @Override
     public int getItemCount() {
 
-        if (this.dataModelList != null){
             return dataModelList.size();
-        }
-        return 0;
     }
 
     public class SignalsViewHolder extends RecyclerView.ViewHolder {
@@ -71,11 +96,16 @@ public class SignalsAdapter extends RecyclerView.Adapter<SignalsAdapter.SignalsV
 
 
     public void updateDatum(List<Datum> newDatum) {
-        NewDiffCallback diffCallback = new NewDiffCallback(dataModelList, newDatum);
+        /*NewDiffCallback diffCallback = new NewDiffCallback(dataModelList, newDatum);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         dataModelList.clear();
         dataModelList.addAll(newDatum);
+        diffResult.dispatchUpdatesTo(this);*/
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new NewDiffCallback(dataModelList, newDatum));
         diffResult.dispatchUpdatesTo(this);
+        dataModelList.clear();
+        dataModelList.addAll(newDatum);
     }
 
 

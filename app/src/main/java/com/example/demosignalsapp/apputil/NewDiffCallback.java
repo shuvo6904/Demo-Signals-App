@@ -1,5 +1,7 @@
 package com.example.demosignalsapp.apputil;
 
+import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
@@ -9,42 +11,85 @@ import java.util.List;
 
 public class NewDiffCallback extends DiffUtil.Callback {
 
-    private final List<Datum> mOldEmployeeList;
-    private final List<Datum> mNewEmployeeList;
+    List<Datum> mOldDataList;
+    List<Datum> mNewDataList;
 
-    public NewDiffCallback(List<Datum> oldEmployeeList, List<Datum> newEmployeeList) {
-        this.mOldEmployeeList = oldEmployeeList;
-        this.mNewEmployeeList = newEmployeeList;
+    public NewDiffCallback(List<Datum> mOldDataList, List<Datum> mNewDataList) {
+        this.mOldDataList = mOldDataList;
+        this.mNewDataList = mNewDataList;
     }
 
     @Override
     public int getOldListSize() {
-        return mOldEmployeeList.size();
+        return mOldDataList != null ? mOldDataList.size() : 0;
     }
 
     @Override
     public int getNewListSize() {
-        return mNewEmployeeList.size();
+        return mNewDataList != null ? mNewDataList.size() : 0;
     }
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mOldEmployeeList.get(oldItemPosition).getId() == mNewEmployeeList.get(
-                newItemPosition).getId();
+        return true;
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        final Datum oldEmployee = mOldEmployeeList.get(oldItemPosition);
-        final Datum newEmployee = mNewEmployeeList.get(newItemPosition);
-
-        return oldEmployee.getId().equals(newEmployee.getId());
+        int result = mNewDataList.get(newItemPosition).compareTo(mOldDataList.get(oldItemPosition));
+        if (result == 0)
+            return true;
+        return false;
     }
 
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        // Implement method if you're going to use ItemAnimator
-        return super.getChangePayload(oldItemPosition, newItemPosition);
+
+        Datum newData = mNewDataList.get(newItemPosition);
+        Datum oldData = mOldDataList.get(oldItemPosition);
+
+        Bundle bundle = new Bundle();
+
+        if (!newData.getStatus().equals(oldData.getStatus())){
+            bundle.putString("status", newData.getStatus());
+        }
+
+        if (!newData.getCurrency().equals(oldData.getCurrency())){
+            bundle.putString("currency", newData.getCurrency());
+        }
+
+        if (bundle.size() == 0)
+            return null;
+
+        return bundle;
+
+        //return super.getChangePayload(oldItemPosition, newItemPosition);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
